@@ -49,10 +49,12 @@
     settings.Resolve.DNSStubListener = "yes";
   };
 
-  swapDevices = [{
-    device = "/swapfile";
-    size = 32768; # 32GB
-  }];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 32768; # 32GB
+    }
+  ];
 
   system.stateVersion = "23.11";
 }

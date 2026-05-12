@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   imports = [
     ./hardware.nix
     ./disko.nix
@@ -42,7 +42,7 @@
     }
   ];
 
-  services.dbus.implementation = "broker";
+  services.dbus.implementation = lib.mkForce "dbus";
 
   services.tailscale.enable = true;
 

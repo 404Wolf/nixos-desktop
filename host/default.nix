@@ -42,6 +42,8 @@
     }
   ];
 
+  services.dbus.implementation = "broker";
+
   services.tailscale.enable = true;
 
   services.resolved = {

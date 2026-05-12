@@ -69,7 +69,7 @@
         ./sops.nix
         ./modules/desktop
         ./host
-        {_module.args.disks = ["/dev/nvme0n1"];}
+        {_module.args.disks = ["/dev/sda"];}
       ];
     };
 

@@ -1,9 +1,7 @@
-# Disko layout for wolf-desktop — SSD (/dev/sda)
+# Disko layout for wolf-desktop — /dev/sda
 # Partition table: GPT
-#   1M   biosboot  — BIOS boot partition (GRUB legacy fallback)
-#   768M ESP       — EFI System Partition (/boot, vfat)
-#   rest luks      — LUKS2-encrypted BTRFS (leaves 32G at end for swap)
-#   32G  swap      — plain swap partition with hibernate resume
+#   427M  ESP  — EFI System Partition (/boot, vfat)  [sda1]
+#   rest  root — ext4 root filesystem                [sda2]
 {
   disko.devices = {
     disk = {
@@ -13,13 +11,8 @@
           type = "gpt";
 
           partitions = {
-            biosboot = {
-              size = "1M";
-              type = "EF02"; # BIOS Boot Partition for GRUB (BIOS mode fallback)
-            };
-
             ESP = {
-              size = "768M";
+              size = "427M";
               type = "EF00"; # EFI System Partition
               content = {
                 type = "filesystem";
@@ -29,61 +22,12 @@
               };
             };
 
-            luks = {
-              name = "luks";
-              end = "-32G"; # leave 32G at the end for the swap partition
-              content = {
-                type = "luks";
-                name = "crypted";
-                passwordFile = "/tmp/secret.key";
-                content = {
-                  type = "btrfs";
-                  extraArgs = ["-f"];
-                  subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      mountOptions = ["compress=zstd" "noatime"];
-                    };
-                    "/home" = {
-                      mountpoint = "/home";
-                      mountOptions = ["noatime"];
-                    };
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = ["compress=zstd" "noatime"];
-                    };
-                    "/var" = {
-                      mountpoint = "/var";
-                      mountOptions = ["compress=zstd" "noatime"];
-                    };
-                    "/.snapshots" = {};
-                  };
-                };
-              };
-            };
-
-            swap = {
-              size = "32G";
-              content = {
-                type = "swap";
-                resumeDevice = true;
-                discardPolicy = "both";
-              };
-            };
-          };
-        };
-      };
-      disco = {
-        device = "/dev/sda";
-        content = {
-          type = "gpt";
-          partitions = {
-            data = {
+            root = {
               size = "100%";
               content = {
                 type = "filesystem";
                 format = "ext4";
-                mountpoint = "/disco";
+                mountpoint = "/";
               };
             };
           };

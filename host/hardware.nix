@@ -10,7 +10,6 @@
   # Kernel modules to be loaded in the initial ramdisk
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "nvme"
     "usbhid"
     "ahci"
   ];

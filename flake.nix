@@ -50,8 +50,7 @@
           hyprland = inputs.hyprland.packages.${system}.hyprland;
         })
         inputs.shared-nixos-modules.overlays.laptop
-      ]
-      ++ (import ./overlays/desktop.nix);
+      ];
 
     pkgs = mkPkgs desktopOverlays;
     helpers = pkgs.callPackage ./utils.nix {};

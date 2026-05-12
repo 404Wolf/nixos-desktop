@@ -1,14 +1,14 @@
-# Disko layout for wolf-laptop — 1TB NVMe SSD (/dev/nvme0n1)
+# Disko layout for wolf-desktop — SSD (/dev/sda)
 # Partition table: GPT
 #   1M   biosboot  — BIOS boot partition (GRUB legacy fallback)
 #   768M ESP       — EFI System Partition (/boot, vfat)
-#   rest luks      — LUKS2-encrypted BTRFS (leaves 64G at end for swap)
-#   64G  swap      — plain swap partition with hibernate resume
+#   rest luks      — LUKS2-encrypted BTRFS (leaves 32G at end for swap)
+#   32G  swap      — plain swap partition with hibernate resume
 {
   disko.devices = {
     disk = {
       main = {
-        device = "/dev/nvme0n1";
+        device = "/dev/sda";
         content = {
           type = "gpt";
 
@@ -68,6 +68,22 @@
                 type = "swap";
                 resumeDevice = true;
                 discardPolicy = "both";
+              };
+            };
+          };
+        };
+      };
+      disco = {
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/disco";
               };
             };
           };

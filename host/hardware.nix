@@ -19,12 +19,8 @@
 
   # Boot loader configuration
   boot.loader = {
-    grub = {
+    systemd-boot = {
       enable = true;
-      device = "nodev";
-      useOSProber = true;
-      efiSupport = true;
-      memtest86.enable = true;
       configurationLimit = 10;
     };
     efi = {

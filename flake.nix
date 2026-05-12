@@ -74,6 +74,10 @@
       ];
     };
 
+    devShells.${system}.default = pkgs.mkShell {
+      packages = [pkgs.just];
+    };
+
     formatter.${system} = let
       pkgs' = import nixpkgs {inherit system;};
       treefmtconfig = inputs.treefmt-nix.lib.evalModule pkgs' {
